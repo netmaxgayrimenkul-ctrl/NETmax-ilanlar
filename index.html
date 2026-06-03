@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+	<title>NETmax İlanlar</title>
+	
+	<link rel="icon" type="image/png" href="images/logo.png">
+	<meta property="og:image" content="https://netmaxgayrimenkul-ctrl.github.io/4468-5/images/logo.png">
+	
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- =========================
+       INTRO / GİRİŞ EKRANI
+  ========================= -->
+  <div id="introScreen" class="intro-screen">
+    <div class="intro-content">
+
+      <div class="intro-logo">
+        <!-- SVG LOGO -->
+       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200">
+
+<defs>
+
+	<!-- Google Fonts üzerinden Great Vibes El Yazısı Fontunu Yüklüyoruz -->
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&amp;display=swap');
+    </style>
+
+	  <linearGradient id="goldHybrid" x1="0" x2="1" y1="0" y2="0">
+		<stop offset="0%" stop-color="#c02a12"/>
+		<stop offset="50%" stop-color="#b88b29"/>
+		<stop offset="100%" stop-color="#8b5c18"/>
+	  </linearGradient>
+	  <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+		<feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#000" flood-opacity="0.22"/>
+	  </filter>
+	</defs>
+	
+<defs>
+    <linearGradient id="goldRingGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8a5d1d"/>
+      <stop offset="30%" stop-color="#d4a017"/>
+      <stop offset="50%" stop-color="#fff4b0"/>
+      <stop offset="70%" stop-color="#e6b33c"/>
+      <stop offset="100%" stop-color="#6e4610"/>
+    </linearGradient>
+
+    <linearGradient id="goldSolidGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e6b33c"/>
+      <stop offset="100%" stop-color="#a4721e"/>
+    </linearGradient>
+
+    <radialGradient id="softGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#fff0b3" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#d4a017" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#d4a017" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <g transform="translate(150, 190) scale(0.65)">
+
+    <!-- Ana daire -->
+    <circle 
+      cx="470" 
+      cy="370" 
+      r="400" 
+      fill="#222222" 
+      stroke="url(#goldRingGradient)" 
+      stroke-width="18"/>
+
+    <!-- İç logo -->
+    <g transform="translate(0, 200)">
+
+      <rect width="1000" height="380" fill="transparent"/>
+
+      <!-- Çatı -->
+      <g 
+        stroke="url(#goldHybrid)" 
+        stroke-width="8" 
+        fill="none" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        transform="translate(335, 0)">
+
+        <polyline points="0,60 85,10 170,60"/>
+        <polyline points="40,60 85,35 130,60"/>
+      </g>
+
+      <!-- en -->
+
+		<!-- Dış altın çerçeve -->
+		<circle
+		  cx="160"
+		  cy="105"
+		  r="44"
+		  fill="#D4A017"/>
+
+		<!-- İç koyu zemin -->
+		<circle
+		  cx="160"
+		  cy="105"
+		  r="40"
+		  fill="#222222"/>
+
+		<!-- en yazısı -->
+		<text 
+		  x="160" 
+		  y="120"
+		  text-anchor="middle"
+		  style="font-family: 'Snell Roundhand', 'Brush Script MT', cursive;" 
+		  font-size="80" 
+		  font-style="italic" 
+		  fill="url(#goldHybrid)">
+		  en
+		</text>
+
+      <!-- NET -->
+      <g fill="url(#goldGlow)" filter="url(#softShadow)">
+
+        <!-- N -->
+        <text 
+          x="210" 
+          y="225" 
+          font-family="Arial Black, Impact" 
+          font-size="185" 
+          font-weight="900" 
+          letter-spacing="2"
+		  fill="#ffffff">
+          N
+        </text>
+
+        <!-- E -->
+        <g>
+
+          <!-- ÜST ÇİZGİ BEYAZ -->
+          <rect 
+            x="374" 
+            y="93" 
+            width="105" 
+            height="32" 
+            fill="#ffffff"/>
+
+          <!-- ORTA ÇİZGİ ALTIN -->
+          <rect 
+            x="374" 
+            y="143" 
+            width="105" 
+            height="32" 
+            fill="url(#goldHybrid)"
+			filter="url(#softShadow)"/>
+
+          <!-- ALT ÇİZGİ BEYAZ -->
+          <rect 
+            x="374" 
+            y="193" 
+            width="105" 
+            height="32" 
+            fill="#ffffff"/>
+        </g>
+
+        <!-- T -->
+        <text 
+          x="495" 
+          y="225" 
+          font-family="Arial Black, Impact" 
+          font-size="185" 
+          font-weight="900" 
+          letter-spacing="2"
+		  fill="#ffffff">
+          T
+        </text>
+      </g>
+
+      <!-- max -->
+      <text 
+        x="620" 
+        y="225" 
+        style="font-family: 'Snell Roundhand', 'Brush Script MT', cursive;"
+        font-size="130" 
+        font-style="italic" 
+        font-weight="500" 
+        fill="url(#goldHybrid)" 
+        letter-spacing="3">
+        max
+      </text>
+
+            <!-- ALT AYIRICI ÇİZGİ -->
+			
+      <line 
+        x1="120" 
+        y1="280" 
+        x2="820" 
+        y2="280" 
+        stroke="#D4A017" 
+        stroke-width="8" 
+        opacity="1"
+        stroke-linecap="round"/>
+
+      <!-- GAYRİMENKUL BEYAZ -->
+      <text 
+        x="480" 
+        y="360" 
+        text-anchor="middle" 
+        font-size="60" 
+        font-family="Arial" 
+        font-weight="800" 
+        letter-spacing="4" 
+        fill="#ffffff">
+        GAYRİMENKUL
+      </text>
+	  
+
+    </g>
+  </g>
+
+</svg>
+      </div>
+
+		<div id="introSlogan" class="intro-slogan"></div>
+
+      <button id="enterBtn" class="enter-btn">
+        Devam Et  👉 İlanlarımız
+      </button>
+	  
+	  <!-- Yeni eğitim butonu -->
+		<button id="eduBtn" class="enter-btn" style="margin-top:30px;">
+		İmar ve İnşaat Bilgi Rehberi 👉
+		</button>
+
+	<div id="eduDropdown" class="dropdown">
+	<div class="dropdown-header">
+    <span class="dropdown-close" id="eduClose">×</span>
+	</div>
+	
+	  <div class="dropdown-item" data-page="bilgi.html">
+		<span class="icon">📘</span> İmar ve Gayrimenkul
+	  </div>
+	  <div class="dropdown-item" data-page="alanlar.html">
+		<span class="icon">🗺️</span> İmar Alanları Bilgileri
+	  </div>
+	  <div class="dropdown-item" data-page="nizam.html">
+		<span class="icon">🏗️</span> İnşaatta Nizam
+	  </div>
+	  <div class="dropdown-item" data-page="taks.html">
+		<span class="icon">📐</span> Taks – Kaks
+	  </div>
+	  <div class="dropdown-item" data-page="plan_hukumleri.html">
+		<span class="icon">📜</span> Plan Hükümleri
+	  </div>
+	</div>
+
+
+
+
+    </div>
+  </div>
+
+  <!-- TELEFON CONTAINER -->
+  <div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+		<img src="images/NETmax_logo.png" alt="Logo" class="site-logo">
+
+	  <!-- 🧭 Yol Tarifi -->
+	  <a 
+		href="https://www.google.com/maps?q=NETmax+Gayrimenkul+Aksaray" 
+		target="_blank" 
+		class="map-marker"
+		aria-label="Yol Tarifi"
+	  >
+		<svg class="map-icon" viewBox="0 0 24 24">
+		  <path d="M12 2C7.6 2 4 5.6 4 10c0 5.3 8 12 8 12s8-6.7 8-12c0-4.4-3.6-8-8-8z"/>
+		  <circle cx="12" cy="10" r="3"/>
+		</svg>
+		<span>Yol Tarifi</span>
+	  </a>
+	</header>
+
+
+    <!-- İLAN LİSTESİ -->
+    <main class="listings"></main>
+
+  </div>
+
+  <!-- MODAL DETAY -->
+  <div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <!-- Kapat butonu -->
+    <button class="close-btn" id="closeModal">KAPAT</button>
+
+    <!-- Slider -->
+    <div class="slider">
+      <button class="slider-btn left" id="prevBtn">‹</button>
+      <img id="sliderImage" src="" alt="İlan Fotoğrafı" />
+      <button class="slider-btn right" id="nextBtn">›</button>
+    </div>
+
+    <!-- Modal Body -->
+	 <div class="modal-body">
+
+	  <h3 id="modalTitle"></h3>
+	  <p id="modalLocation"></p>
+
+	  <div class="modal-price" id="modalPrice"></div>
+
+	  <!-- Özellikler -->
+	  <ul class="features">
+		<li id="adaParsel">Ada / Parsel</li>
+		<li id="metrekareBrut">m² Brüt</li>
+		<li id="metrekareNet">m² Net</li>
+		<li id="alan">Alan</li>
+		<li id="odaSayisi">Oda Sayısı</li>
+		<li id="binaYasi">Bina Yaşı</li>
+		<li id="kat">Daire Katı</li>
+		<li id="toplamKat">Bina Toplam Katı</li>
+		<li id="isitma">Isıtma</li>
+		<li id="balkon">Balkon</li>
+		<li id="asansor">Asansör</li>
+		<li id="otopark">Otopark</li>
+		<li id="esyali">Eşyalı</li>
+		<li id="kullanimDurumu">Kullanım Durumu</li>
+		<li id="site">Site İçinde</li>		
+		<li id="imarDurumu">İmar Durumu</li>
+		<li id="takas">Takas</li>			
+		<li id="tapuDurumu">Tapu Durumu</li>
+	  </ul>
+
+	  <!-- Butonlar -->
+	  <div class="button-container">
+		<button id="detailsBtn">Açıklamalar</button>
+
+		<a href="#" id="parcelBtn" target="_blank" class="parcel-btn">
+		  Parsel Sorgu
+		</a>
+	  </div>
+
+	  <!-- Açıklama Alanı -->
+	  <div id="modalFeatures"></div>
+
+	</div>
+  </div>
+</div>
+
+
+  <script src="js/app.js"></script>
+</body>
+</html>
