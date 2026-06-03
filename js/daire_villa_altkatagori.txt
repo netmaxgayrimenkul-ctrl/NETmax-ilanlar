@@ -1,0 +1,101 @@
+function renderCategoryListings(title, forceSituation = null) {
+  listingsContainer.innerHTML = "";
+
+  // 1. Alt Kategori (Seçim Ekranı) Kontrolü
+  // Eğer kategori Daire veya Villa ise ve henüz bir seçim yapılmadıysa seçim ekranını göster
+  const needsSubMenu = ["Daire", "Villa"].includes(title);
+
+  if (needsSubMenu && !forceSituation) {
+    const categoryBar = document.createElement("div");
+    categoryBar.className = "category-bar";
+    categoryBar.innerHTML = `<span class="back-btn">← Kategorilere Dön</span><span class="category-title">${title} Tipi Seçin</span>`;
+    categoryBar.querySelector(".back-btn").onclick = () => renderCategories();
+    listingsContainer.appendChild(categoryBar);
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "category-grid";
+    
+    // O kategorideki benzersiz situation değerlerini bul
+    const situations = [...new Set(listingsData.filter(item => item.title === title).map(item => item.situation))];
+    
+    situations.forEach(sit => {
+      const card = document.createElement("div");
+      card.className = "category-card";
+      const count = listingsData.filter(item => item.title === title && item.situation === sit).length;
+      card.innerHTML = `${sit}<span class="count">(${count})</span>`;
+      card.onclick = () => renderCategoryListings(title, sit); // Seçim yap ve aynı fonksiyonu çağır
+      wrapper.appendChild(card);
+    });
+    listingsContainer.appendChild(wrapper);
+    return;
+  }
+
+  // 2. Normal Listeleme (Diğer kategoriler veya seçim yapılmış Daire/Villa durumu)
+  const categoryBar = document.createElement("div");
+  categoryBar.className = "category-bar";
+  categoryBar.innerHTML = `
+    <span class="back-btn">← ${forceSituation ? title + " Seçimine Dön" : "Kategorilere Dön"}</span>
+    <span class="category-title">${forceSituation ? title + " (" + forceSituation + ")" : title}</span>
+  `;
+
+  categoryBar.querySelector(".back-btn").onclick = () => {
+    if (forceSituation) {
+      renderCategoryListings(title); // Seçim ekranına geri dön
+    } else {
+      renderCategories(); // Ana kategori listesine geri dön
+    }
+  };
+
+  categoryBar.querySelector(".category-title").classList.add("active");
+  listingsContainer.appendChild(categoryBar);
+
+  const spacer = document.createElement("div");
+  spacer.style.height = "10px";
+  listingsContainer.appendChild(spacer);
+
+  const fragment = document.createDocumentFragment();
+
+  // FİLTRELEME MANTIĞI
+  listingsData
+    .filter(item => forceSituation ? (item.title === title && item.situation === forceSituation) : (item.title === title))
+    .forEach(item => {
+      const card = document.createElement("article");
+      card.className = "card";
+      const img = item.cardImage || item.images?.[0] || "";
+
+      card.innerHTML = `
+        <img src="${img}" loading="lazy" alt="İlan" class="card-img">
+        <div class="card-body">
+            <h3 class="card-title">
+                ${item.title} -&nbsp;
+                <span style="color:#cd853f !important;">${item.situation}</span>
+                <span class="card-id">İlan Id: ${item.id}</span>
+            </h3>
+            <p class="location">${item.location}</p>
+            <div class="price">${formatPrice(item.price, item.currency)}</div>
+            <button class="detail-btn" data-id="${item.id}">Detay &nbsp;&nbsp;🔍</button>
+        </div>
+      `;
+      card.style.opacity = 0;
+      card.style.transform = "translateY(10px)";
+      card.style.transition = "all 0.25s ease";
+      fragment.appendChild(card);
+    });
+
+  listingsContainer.appendChild(fragment);
+
+  // Animasyon
+  const cards = listingsContainer.querySelectorAll(".card");
+  cards.forEach(card => {
+    const img = card.querySelector(".card-img");
+    if (img.complete) {
+      requestAnimationFrame(() => { card.style.opacity = 1; card.style.transform = "translateY(0)"; });
+    } else {
+      img.addEventListener("load", () => {
+        requestAnimationFrame(() => { card.style.opacity = 1; card.style.transform = "translateY(0)"; });
+      });
+    }
+  });
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
