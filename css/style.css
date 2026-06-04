@@ -789,10 +789,10 @@ body.modal-open .listings {
     }
 
   .enter-btn {
-	  padding: 6px 16px;
+	  padding: 8px 18px;
 	  border: none;
 	  border-radius: 999px;
-	  font-size: 18px;
+	  font-size: 16px;
 	  font-weight: 700;
 	  cursor: pointer;
 	  color: #111;
