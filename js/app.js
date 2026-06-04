@@ -904,38 +904,6 @@ function playSlogan() {
 playSlogan();
 
 
-const eduBtn = document.getElementById("eduBtn");
-const eduDropdown = document.getElementById("eduDropdown");
-const eduClose = document.getElementById("eduClose");
-
-/* Aç / kapa */
-eduBtn.addEventListener("click", (e) => {
-  e.preventDefault(); // eduBtn <a> ise sayfa yenilenmesin
-  eduDropdown.classList.toggle("show");
-});
-
-/* X ile kapat */
-eduClose.addEventListener("click", (e) => {
-  e.stopPropagation();
-  eduDropdown.classList.remove("show");
-});
-
-/* Dışarı tıklanınca kapat (CLICK DEĞİL) */
-document.addEventListener("pointerdown", (e) => {
-  if (
-    !eduDropdown.contains(e.target) &&
-    !eduBtn.contains(e.target)
-  ) {
-    eduDropdown.classList.remove("show");
-  }
-});
-
-/* Listeye tıklanınca yönlen */
-eduDropdown.querySelectorAll(".dropdown-item").forEach(item => {
-  item.addEventListener("click", () => {
-    window.location.href = item.dataset.page;
-  });
-});
 
 
 
