@@ -359,7 +359,7 @@ const listingsData = [
 		"images/bayram-kav/13.jpeg",
 		"images/bayram-kav/14.jpeg"
     ],
-    metrekareBrut: "Muhtelif m²",
+    metrekareBrut: "40 m² ile 56 m²",
 	odaSayisi: "1+1",
 	binaYasi: "1",
 	kat: "4 ve 5.Kat",
