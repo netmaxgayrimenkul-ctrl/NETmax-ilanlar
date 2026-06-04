@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İmar ve İnşaat Bilgi Rehberi</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Rehber sayfasına özel basit bir sayfa ortalama ve arka plan stili */
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .rehber-container {
+            width: 100%;
+            max-width: 500px;
+            background: #2a2a2a;
+            border: 2px solid #d4a017;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .rehber-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .rehber-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #d4a017;
+        }
+        .back-btn {
+            background: transparent;
+            border: 1px solid #d4a017;
+            color: #d4a017;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background: #d4a017;
+            color: #222;
+        }
+        .rehber-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .rehber-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #333;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .rehber-item:hover {
+            border-color: #d4a017;
+            background: #3a3a3a;
+            transform: translateX(5px);
+        }
+        .rehber-item .icon {
+            font-size: 1.4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="rehber-container">
+        <div class="rehber-header">
+            <h2>İmar ve İnşaat Bilgi Rehberi</h2>
+            <a href="index.html" class="back-btn">← Geri Dön</a>
+        </div>
+        
+        <div class="rehber-list">
+            <a href="bilgi.html" class="rehber-item">
+                <span class="icon">📘</span> İmar ve Gayrimenkul
+            </a>
+            <a href="alanlar.html" class="rehber-item">
+                <span class="icon">🗺️</span> İmar Alanları Bilgileri
+            </a>
+            <a href="nizam.html" class="rehber-item">
+                <span class="icon">🏗️</span> İnşaatta Nizam
+            </a>
+            <a href="taks.html" class="rehber-item">
+                <span class="icon">📐</span> Taks – Kaks
+            </a>
+            <a href="plan_hukumleri.html" class="rehber-item">
+                <span class="icon">📜</span> Plan Hükümleri
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
