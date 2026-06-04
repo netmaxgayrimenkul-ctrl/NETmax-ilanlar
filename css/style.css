@@ -792,7 +792,7 @@ body.modal-open .listings {
 	  padding: 6px 16px;
 	  border: none;
 	  border-radius: 999px;
-	  font-size: 16px;
+	  font-size: 18px;
 	  font-weight: 700;
 	  cursor: pointer;
 	  color: #111;
@@ -836,37 +836,11 @@ body.modal-open .listings {
   content: none !important;
 }
 
-
-
-#introSlogan {
-  position: absolute;
-  left: 50%;
-  top: 40%;
-
-  max-width: 90vw;
-  overflow: hidden;
-  white-space: nowrap;
-
-  font-size: clamp(13px, 4vw, 16px);
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  color: #b88b29;
-  text-align: center;
-
-  opacity: 0;
-  filter: blur(3px);
-  will-change: opacity, filter, transform;
-  backface-visibility: hidden;
-
-  /* ⚠️ transform artık ANİMASYONDA yönetilecek */
-}
-
-
 /* NORMAL SLOGAN */
 #introSlogan {
   position: absolute;
   left: 50%;
-  top: 60%;
+  top: 40%;
   transform: translate(-50%, -50%);
 
   max-width: 90vw;
