@@ -841,7 +841,7 @@ body.modal-open .listings {
 #introSlogan {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 40%;
 
   max-width: 90vw;
   overflow: hidden;
