@@ -905,3 +905,34 @@ function playSlogan() {
 playSlogan();
 
 document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isShared = urlParams.get('from') === 'whatsapp';
+
+    // 1. WHATSAPP'TAN GELİNDİYSE KAPAT BUTONUNU DOĞURDUĞU ANDA BOĞALIM
+    if (isShared) {
+        // Her 100 milisaniyede bir ekrana kapat butonu gelmiş mi diye bakar, gelmişse anında siler
+        const butonAvcisi = setInterval(() => {
+            const closeBtn = document.getElementById("closeModal");
+            if (closeBtn) {
+                closeBtn.remove(); // Bulduğu an kökten siler
+                clearInterval(butonAvcisi); // İşi bitince takibi bırakır
+            }
+        }, 100);
+
+        // Güvenlik önlemi: Eğer buton silinene kadar görünürse çirkin durmasın diye CSS ile de gizleyelim
+        const style = document.createElement('style');
+        style.innerHTML = '#closeModal { display: none !important; }';
+        document.head.appendChild(style);
+    }
+
+    // 2. PAYLAŞ BUTONUNUN LİNKİNİ AYARLAMA (Mevcut yapıyı korur)
+    const shareBtn = document.getElementById("whatsappShareBtn");
+    if (shareBtn) {
+        shareBtn.addEventListener("click", function() {
+            const mevcutIlanId = urlParams.get('id') || ""; 
+            const temizLink = `${window.location.origin}${window.location.pathname}?id=${mevcutIlanId}&from=whatsapp`;
+            const mesaj = `İlanı incelemek için bağlantıya tıklayın: ${temizLink}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mesaj)}`, '_blank');
+        });
+    }
+});
