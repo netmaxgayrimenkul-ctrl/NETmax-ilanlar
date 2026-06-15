@@ -904,29 +904,4 @@ function playSlogan() {
 
 playSlogan();
 
-// Mevcut tüm kodlarının en altına, </body> etiketinden hemen önce ekle:
 document.addEventListener("DOMContentLoaded", function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const isShared = urlParams.get('from') === 'whatsapp'; // Linkte whatsapp işareti var mı?
-
-    // 1. Eğer WhatsApp'tan gelindiyse Kapat butonunu yok et
-    if (isShared) {
-        const closeBtn = document.getElementById("closeModal");
-        if (closeBtn) {
-            closeBtn.remove(); // Butonu HTML'den tamamen siler
-        }
-    }
-
-    // 2. Paylaş butonuna tıklandığında linki ayarla
-    const shareBtn = document.getElementById("whatsappShareBtn");
-    if (shareBtn) {
-        shareBtn.addEventListener("click", function() {
-            // Tarayıcıdaki mevcut linkin sonuna otomatik olarak &from=whatsapp ekler
-            const mevcutIlanId = urlParams.get('id') || ""; 
-            const temizLink = `${window.location.origin}${window.location.pathname}?id=${mevcutIlanId}&from=whatsapp`;
-            
-            const mesaj = `İlanı incelemek için bağlantıya tıklayın: ${temizLink}`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mesaj)}`, '_blank');
-        });
-    }
-});
