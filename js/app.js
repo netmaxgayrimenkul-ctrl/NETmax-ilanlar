@@ -750,12 +750,16 @@ function openListingModal(item) {
     parcelBtn.onclick = (e) => e.preventDefault();
   }
 
-  // 🔥 WHATSAPP BUTONU (Buradaki link yapısı düzeltildi)
+  // 🔥 WHATSAPP BUTONU (Garanti ve Kırılmaz Versiyon)
   const whatsappBtn = document.getElementById("whatsappShareBtn");
   if (whatsappBtn) {
     whatsappBtn.onclick = function() {
-      // Link yapısı ?ilan=ID&from=whatsapp şeklinde güncellendi
-      const shareUrl = `${window.location.origin}${window.location.pathname}?ilan=${item.id}&from=whatsapp`;
+      // window.location.href mevcut tarayıcıdaki tam linki alır (örn: .../NETmax-ilanlar/?ilan=3)
+      // Önce varsa eski parametreleri temizlemek için temiz bir taban oluşturuyoruz
+      const guncelAdres = window.location.href.split('?')[0]; 
+      
+      // Linki tamamen garanti bir şekilde birleştiriyoruz
+      const shareUrl = `${guncelAdres}?ilan=${item.id}&from=whatsapp`;
       
       const alanMetni = item.alan ? `📐 *Alan:* ${item.alan}\n` : '';
       const odaMetni = item.odaSayisi ? `🛏️ *Oda Sayısı:* ${item.odaSayisi}\n` : '';
