@@ -750,11 +750,12 @@ function openListingModal(item) {
     parcelBtn.onclick = (e) => e.preventDefault();
   }
 
-  // 🔥 WHATSAPP BUTONU (Yazım ve Tırnak Hataları Tamamen Giderildi)
+  // 🔥 WHATSAPP BUTONU (Buradaki link yapısı düzeltildi)
   const whatsappBtn = document.getElementById("whatsappShareBtn");
   if (whatsappBtn) {
     whatsappBtn.onclick = function() {
-      const shareUrl = `${window.location.origin}${window.location.pathname}?ilan=${item.id}`;
+      // Link yapısı ?ilan=ID&from=whatsapp şeklinde güncellendi
+      const shareUrl = `${window.location.origin}${window.location.pathname}?ilan=${item.id}&from=whatsapp`;
       
       const alanMetni = item.alan ? `📐 *Alan:* ${item.alan}\n` : '';
       const odaMetni = item.odaSayisi ? `🛏️ *Oda Sayısı:* ${item.odaSayisi}\n` : '';
@@ -821,6 +822,7 @@ renderCategories();
 window.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const urlIlanId = urlParams.get('ilan');
+  const isShared = urlParams.get('from') === 'whatsapp';
 
   if (urlIlanId) {
     const hedefIlan = listingsData.find(item => item.id === Number(urlIlanId));
@@ -829,39 +831,57 @@ window.addEventListener('DOMContentLoaded', () => {
       if (intro) intro.style.display = "none"; 
       
       openListingModal(hedefIlan);
+
+      // 🔥 WHATSAPP KİLİTLEME AYARI (Hatalar giderildi)
+      if (isShared) {
+         // Kapat butonunu anında HTML'den siler
+         const closeBtn = document.getElementById("closeModal");
+         if (closeBtn) closeBtn.remove();
+
+         // CSS ile de garanti altına alalım
+         const style = document.createElement('style');
+         style.innerHTML = '#closeModal { display: none !important; }';
+         document.head.appendChild(style);
+      }
     }
   }
 });
-/* =========================
-   MODAL KAPATMA – FIX
-========================= */
 
-// KAPAT BUTONU
+/* =========================
+   MODAL KAPATMA – Sadece WhatsApp'tan gelinmediyse çalışır
+========================= */
 closeModal.addEventListener("click", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('from') === 'whatsapp') return; // Kilitleme aktifse kapatma
   modalOverlay.style.display = "none";
 });
 
-// ARKA PLAN TIKLAMA
 modalOverlay.addEventListener("click", (e) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('from') === 'whatsapp') return; // Kilitleme aktifse arkaya tıklayıp kapatma
   if (e.target === modalOverlay) {
     modalOverlay.style.display = "none";
   }
 });
 
-
+/* =========================
+   INTRO VE SLOGAN AYARLARI
+========================= */
 document.addEventListener("DOMContentLoaded", () => {
-      const intro = document.getElementById("introScreen");
-      const btn = document.getElementById("enterBtn");
+  const intro = document.getElementById("introScreen");
+  const btn = document.getElementById("enterBtn");
 
-      btn.addEventListener("click", () => {
-        intro.style.opacity = "0";
-        intro.style.transition = "opacity .4s ease";
+  if(btn && intro) {
+     btn.addEventListener("click", () => {
+       intro.style.opacity = "0";
+       intro.style.transition = "opacity .4s ease";
 
-        setTimeout(() => {
-          intro.style.display = "none";
-        }, 400);
-      });
-    });
+       setTimeout(() => {
+         intro.style.display = "none";
+       }, 400);
+     });
+  }
+});
 	
 const slogans = [
   "Aksaray’da Güvenilir Gayrimenkul",
@@ -873,27 +893,24 @@ const slogans = [
 let sloganIndex = 0;
 const sloganEl = document.getElementById("introSlogan");
 
-const NORMAL_DURATION = 7000;   // normal slogan süresi
-const SPECIAL_DURATION = 10000; // 👈 özel slogan (küçülerek çıkması için UZUN)
+const NORMAL_DURATION = 7000;   
+const SPECIAL_DURATION = 10000; 
 
 function playSlogan() {
+  if(!sloganEl) return;
   const text = slogans[sloganIndex];
 
-  // classları temizle
   sloganEl.classList.remove("special");
-
   let duration = NORMAL_DURATION;
 
   if (text === "NETmax’ta Güvenle Al, Güvenle Sat") {
-    // 👉 ÖZEL SLOGAN
     sloganEl.innerHTML = `" <span class="slogan-highlight">${text}</span> "`;
     sloganEl.classList.add("special");
-    duration = SPECIAL_DURATION;   // 👈 ANİMASYON TAM BİTSİN
+    duration = SPECIAL_DURATION;   
   } else {
     sloganEl.textContent = `"${text}"`;
   }
 
-  // animasyonu sıfırla
   sloganEl.classList.remove("animate");
   void sloganEl.offsetWidth;
   sloganEl.classList.add("animate");
@@ -903,36 +920,3 @@ function playSlogan() {
 }
 
 playSlogan();
-
-document.addEventListener("DOMContentLoaded", function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const isShared = urlParams.get('from') === 'whatsapp';
-
-    // 1. WHATSAPP'TAN GELİNDİYSE KAPAT BUTONUNU DOĞURDUĞU ANDA BOĞALIM
-    if (isShared) {
-        // Her 100 milisaniyede bir ekrana kapat butonu gelmiş mi diye bakar, gelmişse anında siler
-        const butonAvcisi = setInterval(() => {
-            const closeBtn = document.getElementById("closeModal");
-            if (closeBtn) {
-                closeBtn.remove(); // Bulduğu an kökten siler
-                clearInterval(butonAvcisi); // İşi bitince takibi bırakır
-            }
-        }, 100);
-
-        // Güvenlik önlemi: Eğer buton silinene kadar görünürse çirkin durmasın diye CSS ile de gizleyelim
-        const style = document.createElement('style');
-        style.innerHTML = '#closeModal { display: none !important; }';
-        document.head.appendChild(style);
-    }
-
-    // 2. PAYLAŞ BUTONUNUN LİNKİNİ AYARLAMA (Mevcut yapıyı korur)
-    const shareBtn = document.getElementById("whatsappShareBtn");
-    if (shareBtn) {
-        shareBtn.addEventListener("click", function() {
-            const mevcutIlanId = urlParams.get('id') || ""; 
-            const temizLink = `${window.location.origin}${window.location.pathname}?id=${mevcutIlanId}&from=whatsapp`;
-            const mesaj = `İlanı incelemek için bağlantıya tıklayın: ${temizLink}`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mesaj)}`, '_blank');
-        });
-    }
-});
