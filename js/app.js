@@ -459,7 +459,6 @@ const listingsData = [
 ========================= */
 const listingsContainer = document.querySelector(".listings");
 
-
 /* =========================
    FİYAT FORMAT
 ========================= */
@@ -482,30 +481,14 @@ function formatPrice(price, currency) {
       break;
   }
 
-  return symbol + " " + price.toLocaleString(locale);  // ← boşluk eklendi
+  return symbol + " " + price.toLocaleString(locale);
 }
 
 /* =========================
    KATEGORİLER
 ========================= */
 function getCategories() {
-  return [...new Set(listingsData.map(item => item.title))];
-}
-
-/* =========================
-   İLK AÇILIŞ – SADE, ŞIK
-========================= */
-/* ----------------------------
-   KATEGORİLER
----------------------------- */
-
-function getCategories() {
-  // 🔥 istediğin sırada kategoriler
-  return [	"Arsa", 
-			"Dükkan", 
-			"Daire", 
-			"Villa"
-		];
+  return ["Arsa", "Dükkan", "Daire", "Villa"];
 }
 
 /* =========================
@@ -544,46 +527,42 @@ function renderCategories(lastUpdate = "01.06.2026") {
   listingsContainer.appendChild(updateBar);
   
   // --- HARİTA BUTONU ---
-	const mapBtn = document.createElement("button");
-	mapBtn.className = "enter-btn";
-	mapBtn.innerHTML = `<span style="font-size:20px; line-height:1; margin-right:6px;">🌍</span>İlanlar - Harita`;
+  const mapBtn = document.createElement("button");
+  mapBtn.className = "enter-btn";
+  mapBtn.innerHTML = `<span style="font-size:20px; line-height:1; margin-right:6px;">🌍</span>İlanlar - Harita`;
 
-	// ayrı sayfada aç
-	mapBtn.onclick = () => {
-	  // "_blank" yerine "_self" kullanırsan aynı sekmede açar
-	  window.open("tum-ilanlar.html", "_blank");
-	}
+  mapBtn.onclick = () => {
+    window.open("tum-ilanlar.html", "_blank");
+  };
 
-	listingsContainer.appendChild(mapBtn);
+  listingsContainer.appendChild(mapBtn);
 
   // =========================
-  //  ALTTA GERİ İKONU
+  //   ALTTA GERİ İKONU
   // =========================
   const backWrap = document.createElement("div");
   backWrap.className = "back-wrap";
 
   const backBtn = document.createElement("button");
-	backBtn.className = "enter-btn back-btn";   // 👈 enter-btn stili
-	backBtn.innerHTML = "👈 Geri";
+  backBtn.className = "enter-btn back-btn";
+  backBtn.innerHTML = "👈 Geri";
 
-	backBtn.onclick = () => {
-	  const intro = document.getElementById("introScreen");
-	  if (!intro) return;
+  backBtn.onclick = () => {
+    const intro = document.getElementById("introScreen") || document.getElementById("intro");
+    if (!intro) return;
 
-	  intro.style.display = "flex";
-	  intro.style.opacity = "0";
+    intro.style.display = "flex";
+    intro.style.opacity = "0";
 
-	  setTimeout(() => {
-		intro.style.transition = "opacity .3s ease";
-		intro.style.opacity = "1";
-	  }, 10);
-	};
-
+    setTimeout(() => {
+      intro.style.transition = "opacity .3s ease";
+      intro.style.opacity = "1";
+    }, 10);
+  };
 
   backWrap.appendChild(backBtn);
   listingsContainer.appendChild(backWrap);
 }
-
 
 /* =========================
    KATEGORİ İLANLARI
@@ -592,18 +571,16 @@ function renderCategoryListings(title, forceSituation = null) {
   listingsContainer.innerHTML = "";
 
   // 1. Daire Kategorisi İçin Filtreleme Kontrolü
-  // Eğer title "Daire" ise ve henüz bir situation seçilmediyse -> Seçim menüsünü oluştur
   if (title === "Daire" && !forceSituation) {
     const categoryBar = document.createElement("div");
     categoryBar.className = "category-bar";
     categoryBar.innerHTML = `<span class="back-btn">← Kategorilere Dön</span><span class="category-title">Daire Tipi Seçin</span>`;
-	categoryBar.querySelector(".back-btn").onclick = () => renderCategories();
+    categoryBar.querySelector(".back-btn").onclick = () => renderCategories();
     listingsContainer.appendChild(categoryBar);
 
     const wrapper = document.createElement("div");
     wrapper.className = "category-grid";
     
-    // Sadece Daire ilanlarının situation değerlerini al
     const situations = [...new Set(listingsData.filter(item => item.title === "Daire").map(item => item.situation))];
     
     situations.forEach(sit => {
@@ -611,14 +588,14 @@ function renderCategoryListings(title, forceSituation = null) {
       card.className = "category-card";
       const count = listingsData.filter(item => item.title === "Daire" && item.situation === sit).length;
       card.innerHTML = `${sit}<span class="count">(${count})</span>`;
-      card.onclick = () => renderCategoryListings("Daire", sit); // Kendini tekrar çağır
+      card.onclick = () => renderCategoryListings("Daire", sit);
       wrapper.appendChild(card);
     });
     listingsContainer.appendChild(wrapper);
     return;
   }
 
-  // 2. Normal Listeleme (Diğer kategoriler veya seçilmiş Daire durumu)
+  // 2. Normal Listeleme
   const categoryBar = document.createElement("div");
   categoryBar.className = "category-bar";
   categoryBar.innerHTML = `
@@ -628,9 +605,9 @@ function renderCategoryListings(title, forceSituation = null) {
 
   categoryBar.querySelector(".back-btn").onclick = () => {
     if (forceSituation) {
-      renderCategoryListings("Daire"); // Daire alt seçim ekranına geri dön
+      renderCategoryListings("Daire");
     } else {
-      renderCategories(); // Ana kategori listesine geri dön (varsayılan tarihle)
+      renderCategories();
     }
   };
 
@@ -643,7 +620,6 @@ function renderCategoryListings(title, forceSituation = null) {
 
   const fragment = document.createDocumentFragment();
 
-  // FİLTRELEME MANTIĞI: Eğer forceSituation varsa ona göre, yoksa sadece title'a göre
   listingsData
     .filter(item => forceSituation ? (item.title === title && item.situation === forceSituation) : (item.title === title))
     .forEach(item => {
@@ -689,7 +665,7 @@ function renderCategoryListings(title, forceSituation = null) {
 }
 
 /* =========================
-   MODAL (AYNI – BOZULMAZ)
+   MODAL TEKİL FONKSİYON 
 ========================= */
 function setField(el, label, value) {
   if (value && value !== "-") {
@@ -700,15 +676,8 @@ function setField(el, label, value) {
   }
 }
 
-document.addEventListener("click", e => {
-
-  const btn = e.target.closest(".detail-btn");
-  if (!btn) return;
-
-  const id = Number(btn.dataset.id);
-  const item = listingsData.find(i => i.id === id);
-  if (!item) return;
-
+// 🟩 MODALI VERİLERLE DOLDURAN VE AÇAN TEK ANA FONKSİYON
+function openListingModal(item) {
   currentImages = item.images;
   currentIndex = 0;
   showImage(0);
@@ -717,109 +686,118 @@ document.addEventListener("click", e => {
   modalLocation.textContent = item.location;
   modalPrice.textContent = formatPrice(item.price, item.currency);
 
-		setField(odaSayisi,       "Oda Sayısı", item.odaSayisi);
-		setField(metrekareBrut,   "m² Brüt", item.metrekareBrut);
-		setField(metrekareNet,   "m² Brüt", item.metrekareNet);
-		setField(adaParsel,       "Ada / Parsel", item.adaParsel);
-		setField(alan,            "Alan", item.alan);
-		setField(kat,             "Bulunduğu Kat", item.kat);
-		setField(balkon,          "Balkon", item.balkon);
-		setField(binaYasi,        "Bina Yaşı", item.binaYasi);
-		setField(imarDurumu,      "İmar Durumu", item.imarDurumu);
-		setField(takas,           "Takas", item.takas);
-		setField(isitma,          "Isıtma", item.isitma);
-		setField(asansor,         "Asansör", item.asansor);
-		setField(otopark,         "Otopark", item.otopark);
-		setField(site,            "Site İçerisinde", item.site);
-		setField(esyali,          "Eşyalı", item.esyali);
-		setField(toplamKat,       "Kat Sayısı", item.toplamKat);
-		setField(kullanimDurumu,  "Kullanım Durumu", item.kullanimDurumu);
-		setField(tapuDurumu,      "Tapu Durumu", item.tapuDurumu);
+  setField(odaSayisi,       "Oda Sayısı", item.odaSayisi);
+  setField(metrekareBrut,   "m² Brüt", item.metrekareBrut);
+  setField(metrekareNet,    "m² Net", item.metrekareNet);
+  setField(adaParsel,       "Ada / Parsel", item.adaParsel);
+  setField(alan,            "Alan", item.alan);
+  setField(kat,             "Bulunduğu Kat", item.kat);
+  setField(balkon,          "Balkon", item.balkon);
+  setField(binaYasi,        "Bina Yaşı", item.binaYasi);
+  setField(imarDurumu,      "İmar Durumu", item.imarDurumu);
+  setField(takas,           "Takas", item.takas);
+  setField(isitma,          "Isıtma", item.isitma);
+  setField(asansor,         "Asansör", item.asansor);
+  setField(otopark,         "Otopark", item.otopark);
+  setField(site,            "Site İçerisinde", item.site);
+  setField(esyali,          "Eşyalı", item.esyali);
+  setField(toplamKat,       "Kat Sayısı", item.toplamKat);
+  setField(kullanimDurumu,  "Kullanım Durumu", item.kullanimDurumu);
+  setField(tapuDurumu,      "Tapu Durumu", item.tapuDurumu);
 
-// =========================
-  // AÇIKLAMA
-  // =========================
-// --- AÇIKLAMA (DETAILS) BÖLÜMÜ ---
-if (item.aciklama && item.aciklama.trim() !== "") {
-  detailsBtn.classList.remove("hidden");
-  modalFeatures.style.display = "none";
-  modalFeatures.classList.remove("show");
-
-  const lines = item.aciklama.split("\n");
-
-	let secondPart = false;
-
-	modalFeatures.innerHTML = lines.map(line => {
-
-	  if (line.trim() === "aciklama2") {
-		secondPart = true;
-		return "";
-	  }
-
-	  return `
-		<div>
-		  ${secondPart ? "•" : "✔"} ${line}
-		</div>
-	  `;
-	}).join("");
-
-  detailsBtn.onclick = () => {
-  if (modalFeatures.style.display === "none") {
-    modalFeatures.style.display = "block";
-    setTimeout(() => modalFeatures.classList.add("show"), 10);
-    detailsBtn.textContent = "Kapat";
-
-    // bunu kaldır
-    // modalFeatures.scrollIntoView({ behavior: "smooth", block: "nearest" });
-
-  } else {
+  // --- AÇIKLAMA ---
+  if (item.aciklama && item.aciklama.trim() !== "") {
+    detailsBtn.classList.remove("hidden");
+    modalFeatures.style.display = "none";
     modalFeatures.classList.remove("show");
-    setTimeout(() => { modalFeatures.style.display = "none"; }, 200);
-    detailsBtn.textContent = "Açıklamalar";
+
+    const lines = item.aciklama.split("\n");
+    let secondPart = false;
+
+    modalFeatures.innerHTML = lines.map(line => {
+      if (line.trim() === "aciklama2") {
+        secondPart = true;
+        return "";
+      }
+      return `<div>${secondPart ? "•" : "✔"} ${line}</div>`;
+    }).join("");
+
+    detailsBtn.onclick = () => {
+      if (modalFeatures.style.display === "none") {
+        modalFeatures.style.display = "block";
+        setTimeout(() => modalFeatures.classList.add("show"), 10);
+        detailsBtn.textContent = "Kapat";
+      } else {
+        modalFeatures.classList.remove("show");
+        setTimeout(() => { modalFeatures.style.display = "none"; }, 200);
+        detailsBtn.textContent = "Açıklamalar";
+      }
+    };
+  } else {
+    detailsBtn.classList.add("hidden");
+    modalFeatures.style.display = "none";
+    modalFeatures.innerHTML = "";
+    detailsBtn.onclick = null;
   }
-};
-} else {
-  detailsBtn.classList.add("hidden");
-  modalFeatures.style.display = "none";
-  modalFeatures.innerHTML = "";
-  detailsBtn.onclick = null;
+
+  // --- PARSEL ---
+  if (item.parcelUrl) {
+    parcelBtn.classList.remove("hidden");
+    parcelBtn.href = item.parcelUrl;
+  } else {
+    parcelBtn.classList.add("hidden");
+    parcelBtn.removeAttribute("href");
+    parcelBtn.onclick = (e) => e.preventDefault();
+  }
+
+  // 🔥 WHATSAPP BUTONU (Yazım ve Tırnak Hataları Tamamen Giderildi)
+  const whatsappBtn = document.getElementById("whatsappShareBtn");
+  if (whatsappBtn) {
+    whatsappBtn.onclick = function() {
+      const shareUrl = `${window.location.origin}${window.location.pathname}?ilan=${item.id}`;
+      
+      const alanMetni = item.alan ? `📐 *Alan:* ${item.alan}\n` : '';
+      const odaMetni = item.odaSayisi ? `🛏️ *Oda Sayısı:* ${item.odaSayisi}\n` : '';
+      
+      const message = `📢 *${item.title} - ${item.situation}*\n\n💰 *Fiyat:* ${formatPrice(item.price, item.currency)}\n📍 *Konum:* ${item.location}\n${alanMetni}${odaMetni}\n🔗 *İlan Detayları ve Fotoğraflar İçin Tıklayın:*\n${shareUrl}`;
+
+      const encodedMessage = encodeURIComponent(message);
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      let whatsappUrl = isMobile 
+        ? `https://api.whatsapp.com/send?text=${encodedMessage}`
+        : `https://web.whatsapp.com/send?text=${encodedMessage}`;
+
+      window.open(whatsappUrl, '_blank');
+    };
+  }
+
+  modalOverlay.style.display = "flex";
 }
 
-// --- PARSEL BÖLÜMÜ ---
-if (item.parcelUrl) {
-  parcelBtn.classList.remove("hidden");
-  parcelBtn.href = item.parcelUrl;
-} else {
-  parcelBtn.classList.add("hidden");
-  parcelBtn.removeAttribute("href");
-  parcelBtn.onclick = (e) => e.preventDefault();
-}
+// Kartlardaki detay butonunu yakalayan olay dinleyicisi
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".detail-btn");
+  if (!btn) return;
 
-modalOverlay.style.display = "flex";
+  const id = Number(btn.dataset.id);
+  const item = listingsData.find(i => i.id === id);
+  if (!item) return;
 
-
+  openListingModal(item);
 });
-
-
-
 
 /* =========================
    SLIDER
 ========================= */
 function showImage(index) {
   sliderImage.src = currentImages[index];
-
-  // İlk resimde geri butonunu gizle
   prevBtn.style.display = index === 0 ? "none" : "flex";
-
-  // Son resimde ileri butonunu gizle
-  nextBtn.style.display =
-    index === currentImages.length - 1 ? "none" : "flex";
+  nextBtn.style.display = index === currentImages.length - 1 ? "none" : "flex";
 }
 
 prevBtn.onclick = e => {
   e.stopPropagation();
-
   if (currentIndex > 0) {
     currentIndex--;
     showImage(currentIndex);
@@ -828,7 +806,6 @@ prevBtn.onclick = e => {
 
 nextBtn.onclick = e => {
   e.stopPropagation();
-
   if (currentIndex < currentImages.length - 1) {
     currentIndex++;
     showImage(currentIndex);
@@ -836,11 +813,25 @@ nextBtn.onclick = e => {
 };
 
 /* =========================
-   BAŞLAT
+   BAŞLAT VE DIŞ BAĞLANTI KONTROLÜ
 ========================= */
 renderCategories();
 
+// Sayfa yüklendiğinde URL'deki ilan ID'sini denetleyen kısım
+window.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlIlanId = urlParams.get('ilan');
 
+  if (urlIlanId) {
+    const hedefIlan = listingsData.find(item => item.id === Number(urlIlanId));
+    if (hedefIlan) {
+      const intro = document.getElementById("introScreen") || document.getElementById("intro");
+      if (intro) intro.style.display = "none"; 
+      
+      openListingModal(hedefIlan);
+    }
+  }
+});
 /* =========================
    MODAL KAPATMA – FIX
 ========================= */
@@ -912,18 +903,3 @@ function playSlogan() {
 }
 
 playSlogan();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
