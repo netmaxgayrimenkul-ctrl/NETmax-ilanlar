@@ -822,7 +822,6 @@ nextBtn.onclick = e => {
 ========================= */
 renderCategories();
 
-// Sayfa yüklendiğinde URL'deki ilan ID'sini denetleyen kısım
 window.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const urlIlanId = urlParams.get('ilan');
@@ -832,42 +831,25 @@ window.addEventListener('DOMContentLoaded', () => {
     const hedefIlan = listingsData.find(item => item.id === Number(urlIlanId));
     if (hedefIlan) {
       const intro = document.getElementById("introScreen") || document.getElementById("intro");
-      if (intro) intro.style.display = "none"; 
-      
+      if (intro) intro.style.display = "none";
+
       openListingModal(hedefIlan);
-
-      // 🔥 WHATSAPP KİLİTLEME AYARI (Hatalar giderildi)
-      if (isShared) {
-         // Kapat butonunu anında HTML'den siler
-         const closeBtn = document.getElementById("closeModal");
-         if (closeBtn) closeBtn.remove();
-
-         // CSS ile de garanti altına alalım
-         const style = document.createElement('style');
-         style.innerHTML = '#closeModal { display: none !important; }';
-         document.head.appendChild(style);
-      }
     }
   }
 });
 
 /* =========================
-   MODAL KAPATMA – Sadece WhatsApp'tan gelinmediyse çalışır
+   MODAL KAPATMA
 ========================= */
 closeModal.addEventListener("click", () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('from') === 'whatsapp') return; // Kilitleme aktifse kapatma
   modalOverlay.style.display = "none";
 });
 
 modalOverlay.addEventListener("click", (e) => {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('from') === 'whatsapp') return; // Kilitleme aktifse arkaya tıklayıp kapatma
   if (e.target === modalOverlay) {
     modalOverlay.style.display = "none";
   }
 });
-
 /* =========================
    INTRO VE SLOGAN AYARLARI
 ========================= */
