@@ -537,35 +537,65 @@ body.modal-open .listings {
 
 .slider-btn {
   position: absolute;
-  top: 75%;                /* Tam orta */
+  top: 75%;
   transform: translateY(-50%);
-  width: 35px;             /* Butonları belirginleştir */
+  width: 35px;
   height: 35px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2); /* Yarı saydam beyaz */
-  backdrop-filter: blur(5px); /* Modern cam efekti */
-  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  background: rgba(0, 0, 0, 0.65); /* Daha koyu */
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+
   color: #fff;
-  font-size: 26px;         /* İkonları büyüt */
+  font-size: 26px;
+  font-weight: bold;
+
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease; /* Yumuşak geçiş */
+
+  transition: all 0.3s ease;
   z-index: 10;
-  
+
   line-height: 1;
   padding-bottom: 5px;
 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
 }
 
 .slider-btn:hover {
-  background: rgba(255, 255, 255, 0.4);
-  transform: translateY(-50%) scale(1.1); /* Üzerine gelince büyü */
+  background: rgba(0, 0, 0, 0.85);
+  border-color: #fff;
+  transform: translateY(-50%) scale(1.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
 }
 
 .slider-btn.left { left: 15px; }
 .slider-btn.right { right: 15px; }
+
+@media (max-width: 768px) {
+  .slider-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    padding-bottom: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .slider-btn.left {
+    left: 10px;
+  }
+
+  .slider-btn.right {
+    right: 10px;
+  }
+}
 
 /* ============================= */
 .category-bar {
